@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎉 Birthday Wishes for Jitu!</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    /* Wishes Page Specific Styles */
+    .wishes-intro {
+      font-size: 1.2rem;
+      color: #666;
+      text-align: center;
+      margin-bottom: 2rem;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .wishes-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+    
+    .wish-card {
+      background: white;
+      border-radius: 15px;
+      padding: 1.5rem;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+      border: 1px solid #eee;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.6s ease forwards;
+    }
+    
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .wish-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+    
+    .wish-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    
+    .wish-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-right: 1rem;
+      border: 3px solid var(--primary-color);
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .wish-card h3 {
+      margin: 0;
+      color: #333;
+      font-size: 1.1rem;
+    }
+    
+    .wish-message {
+      color: #555;
+      line-height: 1.6;
+      margin: 0;
+      font-size: 0.95rem;
+    }
+    
+    .wish-time {
+      font-size: 0.8rem;
+      color: #999;
+      margin-top: 0.8rem;
+      display: block;
+    }
+    
+    /* Wish Form */
+    .wish-form-container {
+      max-width: 700px;
+      margin: 3rem auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 5px 25px rgba(0, 0, 0, 0.05);
+    }
+    
+    .wish-form h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: #333;
+    }
+    
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: #555;
+      font-weight: 500;
+    }
+    
+    .form-control {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+    
+    .form-control:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.2);
+      outline: none;
+    }
+    
+    textarea.form-control {
+      min-height: 120px;
+      resize: vertical;
+    }
+    
+    .btn-submit {
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 0.8rem 2rem;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .btn-submit:hover {
+      background: #ff5252;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+    }
+    
+    .btn-submit i {
+      margin-left: 8px;
+    }
+    
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: #888;
+      font-style: italic;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .wishes-container {
+        grid-template-columns: 1fr;
+      }
+      
+      .wish-form-container {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-brand animate__animated animate__bounce">🎂 Jitu's Birthday Bash!</div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      
+      <a href="gallery.html">Photo Gallery</a>
+      <a href="wishes.html" class="active">Birthday Wishes</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h1 class="animate__animated animate__fadeInDown">Barta Kisu Kisu</h1>
+    <p class="wishes-intro animate__animated animate__fadeIn animate__delay-1s">Leave your heartfelt birthday wishes for Jitu and see what others have written!</p>
+
+    <!-- Wish Form -->
+    
+
+    <!-- Wishes Container -->
+    <div id="wishesContainer" class="wishes-container">
+      <!-- Wishes will be dynamically added here -->
+      <div class="wish-card" style="animation-delay: 0.1s">
+        <div class="wish-header">
+          <img src="images/ari.jpeg" alt="Ari" class="wish-avatar">
+          <h3>Ari</h3>
+        </div>
+        <p class="wish-message">Iman Time Nai mur , Kam Ase Bohut, Birthday Kham Log Pali, eiei Kolu🎉</p>
+        <span class="wish-time">Just now</span>
+      </div>
+
+      <div class="wish-card" style="animation-delay: 0.2s">
+        <div class="wish-header">
+          <img src="images/arin.jpeg" alt="Arin" class="wish-avatar">
+          <h3>Arin</h3>
+        </div>
+        <p class="wish-message">duror porai tumatke Dagor Buli Ashirbad Diso , kuxol ne ki Xetu thkba Xodai🎂</p>
+        <span class="wish-time">5 minutes ago</span>
+      </div>
+
+      <div class="wish-card" style="animation-delay: 0.3s">
+        <div class="wish-header">
+          <img src="images/Bimal.jpeg" alt="Bimal" class="wish-avatar">
+          <h3>Bimal</h3>
+        </div>
+        <p class="wish-message"> Jonmo Din Buli wish kori dilo aru , Biyatei party tu kham dia aru 🌟</p>
+        <span class="wish-time">15 minutes ago</span>
+      </div>
+
+      <div class="wish-card" style="animation-delay: 0.4s">
+        <div class="wish-header">
+          <img src="images/Dav.jpeg" alt="Dav" class="wish-avatar">
+          <h3>Dav</h3>
+        </div>
+        <p class="wish-message">eh hbo de aar , kimn wish korim 🎈</p>
+        <span class="wish-time">30 bsr ago</span>
+      </div>
+
+      <div class="wish-card" style="animation-delay: 0.5s">
+        <div class="wish-header">
+          <img src="images/Jack.jpeg" alt="Jack" class="wish-avatar">
+          <h3>Jack</h3>
+        </div>
+        <p class="wish-message"> o jItu , BirthyDay  tu wish korlo .Chicken Party Pam buli Axa thkil ,  🎁</p>
+        <span class="wish-time">10 bosor  ago</span>
+      </div>
+
+      <div class="wish-card" style="animation-delay: 0.6s">
+        <div class="wish-header">
+          <img src="images/Nayn.jpeg" alt="Nayn" class="wish-avatar">
+          <h3>Nayn</h3>
+        </div>
+        <p class="wish-message">Besi Nokou , Jonmo DInor XUbessssa Thakil🎊</p>
+        <span class="wish-time">1 hours ago</span>
+      </div>
+
+      <div class="wish-card" style="animation-delay: 0.7s">
+        <div class="wish-header">
+          <img src="images/Rin.jpeg" alt="Rin" class="wish-avatar">
+          <h3>Rintu</h3>
+        </div>
+        <p class="wish-message">Happy Birthday, Jie nohok jonmo din buli wish korilo aru lge Happy NEw year dilo 🥂</p>
+        <span class="wish-time">1 hours ago</span>
+      </div>
+
+      <div class="wish-card" style="animation-delay: 0.8s">
+        <div class="wish-header">
+          <img src="images/BAck.jpeg" alt="BAck" class="wish-avatar">
+          <h3>BAck</h3>
+        </div>
+        <p class="wish-message">Xexot moi xokolu falor pora ata tumak dhunia drisho prodan korim buli jonalo aru birthday buli olekh olokh selfie stick dan dilo🎉</p>
+        <span class="wish-time">Just now</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Include main JavaScript -->
+  <script src="js/script.js"></script>
+  
+  <!-- Wishes JavaScript -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const wishForm = document.getElementById('wishForm');
+      const wishesContainer = document.getElementById('wishesContainer');
+      
+      // Sample avatar options (you can add more)
+      const avatarOptions = [
+        'images/ari.jpeg',
+        'images/arin.jpeg',
+        'images/Bimal.jpeg',
+        'images/Dav.jpeg',
+        'images/Jack.jpeg',
+        'images/Nayn.jpeg',
+        'images/Rin.jpeg',
+        'images/BAck.jpeg'
+      ];
+      
+      // Handle form submission
+      wishForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const nameInput = document.getElementById('wishName');
+        const messageInput = document.getElementById('wishMessage');
+        
+        // Create new wish element
+        const newWish = document.createElement('div');
+        newWish.className = 'wish-card';
+        newWish.style.animation = 'fadeInUp 0.6s ease forwards';
+        newWish.style.opacity = '0';
+        
+        // Get random avatar
+        const randomAvatar = avatarOptions[Math.floor(Math.random() * avatarOptions.length)];
+        
+        // Set wish content
+        newWish.innerHTML = `
+          <div class="wish-header">
+            <img src="${randomAvatar}" alt="${nameInput.value}" class="wish-avatar">
+            <h3>${escapeHtml(nameInput.value)}</h3>
+          </div>
+          <p class="wish-message">${escapeHtml(messageInput.value)}</p>
+          <span class="wish-time">Just now</span>
+        `;
+        
+        // Add to the top of the container
+        wishesContainer.insertBefore(newWish, wishesContainer.firstChild);
+        
+        // Reset form
+        wishForm.reset();
+        
+        // Show success message
+        showNotification('Your wish has been posted!', 'success');
+        
+        // Scroll to the new wish
+        setTimeout(() => {
+          newWish.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }, 100);
+      });
+      
+      // Helper function to escape HTML
+      function escapeHtml(unsafe) {
+        return unsafe
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;");
+      }
+      
+      // Show notification
+      function showNotification(message, type = 'success') {
+        const notification = document.createElement('div');
+        notification.className = `notification ${type} animate__animated animate__fadeInUp`;
+        notification.textContent = message;
+        
+        document.body.appendChild(notification);
+        
+        // Remove notification after 3 seconds
+        setTimeout(() => {
+          notification.classList.add('animate__fadeOutDown');
+          notification.addEventListener('animationend', () => {
+            notification.remove();
+          });
+        }, 3000);
+      }
+    });
+  </script>
+  
+  <style>
+    /* Notification styles */
+    .notification {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      padding: 15px 25px;
+      border-radius: 8px;
+      color: white;
+      font-weight: 500;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+      max-width: 300px;
+    }
+    
+    .notification.success {
+      background: #4caf50;
+    }
+    
+    .notification.error {
+      background: #f44336;
+    }
+    
+    /* Animation delays for wish cards */
+    .wish-card:nth-child(1) { animation-delay: 0.1s !important; }
+    .wish-card:nth-child(2) { animation-delay: 0.2s !important; }
+    .wish-card:nth-child(3) { animation-delay: 0.3s !important; }
+    .wish-card:nth-child(4) { animation-delay: 0.4s !important; }
+    .wish-card:nth-child(5) { animation-delay: 0.5s !important; }
+    .wish-card:nth-child(6) { animation-delay: 0.6s !important; }
+    .wish-card:nth-child(7) { animation-delay: 0.7s !important; }
+    .wish-card:nth-child(8) { animation-delay: 0.8s !important; }
+  </style>
+</body>
+</html>

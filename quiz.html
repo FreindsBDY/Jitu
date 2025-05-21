@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎉 Jitu's Birthday Quiz</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <style>
+    /* Quiz specific styles */
+    .quiz-container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 15px;
+      padding: 2rem;
+      box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .quiz-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    
+    .quiz-intro {
+      font-size: 1.2rem;
+      color: #666;
+      margin-bottom: 2rem;
+    }
+    
+    .question-container {
+      margin-bottom: 2rem;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.5s ease;
+    }
+    
+    .question-container.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .question {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      color: #333;
+    }
+    
+    .options {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    
+    .option {
+      background: #f8f9fa;
+      border: 2px solid #e9ecef;
+      border-radius: 10px;
+      padding: 1rem 1.5rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 1rem;
+      text-align: left;
+    }
+    
+    .option:hover {
+      background: #e9ecef;
+      transform: translateX(5px);
+    }
+    
+    .option.selected {
+      background: #4ecdc4;
+      border-color: #4ecdc4;
+      color: white;
+    }
+    
+    .option.correct {
+      background: #1dd1a1;
+      border-color: #1dd1a1;
+      color: white;
+    }
+    
+    .option.incorrect {
+      background: #ff6b6b;
+      border-color: #ff6b6b;
+      color: white;
+    }
+    
+    .quiz-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #eee;
+    }
+    
+    .quiz-progress {
+      font-size: 0.9rem;
+      color: #666;
+    }
+    
+    .btn {
+      padding: 0.8rem 1.8rem;
+      border-radius: 50px;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-size: 0.9rem;
+    }
+    
+    .btn-primary {
+      background: var(--primary-color);
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+    }
+    
+    .btn-secondary {
+      background: #6c757d;
+      color: white;
+    }
+    
+    .btn-secondary:hover {
+      background: #5a6268;
+      transform: translateY(-2px);
+    }
+    
+    .btn:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+    
+    .score-container {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    
+    .score-circle {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #4ecdc4, #1dd1a1);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0 auto 1.5rem;
+      color: white;
+      font-size: 2.5rem;
+      font-weight: 700;
+      box-shadow: 0 10px 30px rgba(29, 209, 161, 0.3);
+    }
+    
+    .feedback {
+      margin-top: 1rem;
+      padding: 1rem;
+      border-radius: 8px;
+      display: none;
+    }
+    
+    .feedback.correct {
+      background: rgba(29, 209, 161, 0.1);
+      color: #1dd1a1;
+      border-left: 4px solid #1dd1a1;
+    }
+    
+    .feedback.incorrect {
+      background: rgba(255, 107, 107, 0.1);
+      color: #ff6b6b;
+      border-left: 4px solid #ff6b6b;
+    }
+    
+    @media (max-width: 768px) {
+      .quiz-container {
+        padding: 1.5rem;
+      }
+      
+      .question {
+        font-size: 1.3rem;
+      }
+      
+      .quiz-footer {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      
+      .btn {
+        width: 100%;
+      }
+    }
+    
+    /* Confetti styles */
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      background-color: #f00;
+      opacity: 0.8;
+      animation: fall linear forwards;
+      z-index: 1000;
+      pointer-events: none;
+    }
+    
+    @keyframes fall {
+      to {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+      }
+    }
+    
+    .floating-elements {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 999;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-brand animate__animated animate__bounce">🎂 Jitu's Birthday Bash!</div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="quiz.html" class="active">Fun Quiz</a>
+      <a href="gallery.html">Photo Gallery</a>
+      <a href="wishes.html">Birthday Wishes</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h1 class="animate__animated animate__fadeInDown">🎯 How Well Do You Know Jitu?</h1>
+    <p class="quiz-intro animate__animated animate__fadeIn animate__delay-1s">Test your knowledge about the birthday star and unlock special surprises! Get ready for some fun facts and memories.</p>
+
+    <div class="quiz-container animate__animated animate__fadeInUp">
+      <div id="quiz-content">
+        <div id="question-container" class="question-container">
+          <div id="question-number" class="text-muted">Question 1 of 10</div>
+          <div id="question" class="question"></div>
+          <div id="options" class="options"></div>
+          <div id="feedback" class="feedback"></div>
+        </div>
+        
+        <div class="quiz-footer">
+          <div id="progress" class="quiz-progress">1/10</div>
+          <button id="next-btn" class="btn btn-primary" disabled>Next Question</button>
+        </div>
+      </div>
+      
+      <div id="result-container" style="display: none;">
+        <div class="score-circle">
+          <span id="score">0</span>%
+        </div>
+        <h2 id="result-title">🎉 Great Job!</h2>
+        <p id="result-message">You know Jitu pretty well! Here's your special surprise!</p>
+        
+        <div class="photo-montage">
+          <img src="images/ari.jpeg" alt="Ari" class="animate__animated animate__zoomIn">
+          <img src="images/arin.jpeg" alt="Arin" class="animate__animated animate__zoomIn">
+          <img src="images/Bimal.jpeg" alt="Bimal" class="animate__animated animate__zoomIn">
+          <img src="images/Dav.jpeg" alt="Dav" class="animate__animated animate__zoomIn">
+          <img src="images/Jack.jpeg" alt="Jack" class="animate__animated animate__zoomIn">
+          <img src="images/Nayn.jpeg" alt="Nayn" class="animate__animated animate__zoomIn">
+          <img src="images/Rin.jpeg" alt="Rin" class="animate__animated animate__zoomIn">
+          <img src="images/BAck.jpeg" alt="Group Photo" class="animate__animated animate__zoomIn">
+        </div>
+        
+        <div class="action-buttons" style="margin-top: 2rem;">
+          <button onclick="location.reload()" class="btn btn-primary" style="margin-right: 1rem;">
+            🔄 Play Again
+          </button>
+          <a href="index.html" class="btn btn-secondary">🏠 Back to Home</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confetti container -->
+  <div class="floating-elements"></div>
+  
+  <!-- Include main JavaScript -->
+  <script src="js/script.js"></script>
+  
+  <!-- Quiz JavaScript -->
+  <script>
+    // Quiz questions and answers
+    const quizData = [
+      {
+        question: "What is Jitu's favorite color?",
+        options: ["Blue", "Red", "Green", "Black"],
+        answer: 0,
+        fact: "Jitu loves the color Blue because it reminds him of the ocean and the sky!"
+      },
+      {
+        question: "What is Jitu's favorite food?",
+        options: ["Pizza", "Sushi", "Biryani", "Burger"],
+        answer: 2,
+        fact: "Jitu can never say no to a plate of delicious Biryani!"
+      },
+      {
+        question: "Which hobby does Jitu enjoy the most?",
+        options: ["Reading", "Gaming", "Photography", "Cooking"],
+        answer: 1,
+        fact: "Jitu is an avid gamer and loves playing video games in his free time!"
+      },
+      {
+        question: "What is Jitu's dream travel destination?",
+        options: ["Japan", "Switzerland", "Maldives", "New Zealand"],
+        answer: 0,
+        fact: "Jitu dreams of visiting Japan to experience its unique culture and technology!"
+      },
+      {
+        question: "What is Jitu's favorite movie genre?",
+        options: ["Action", "Comedy", "Sci-Fi", "Drama"],
+        answer: 2,
+        fact: "Jitu loves Sci-Fi movies, especially those set in futuristic worlds!"
+      },
+      {
+        question: "Which season does Jitu like the most?",
+        options: ["Summer", "Winter", "Spring", "Autumn"],
+        answer: 1,
+        fact: "Jitu loves Winter for its cool weather and festive atmosphere!"
+      },
+      {
+        question: "What is Jitu's favorite type of music?",
+        options: ["Pop", "Rock", "Hip-Hop", "EDM"],
+        answer: 3,
+        fact: "Jitu enjoys EDM the most, especially during workouts and parties!"
+      },
+      {
+        question: "What is Jitu's favorite sport to watch?",
+        options: ["Football", "Cricket", "Basketball", "Tennis"],
+        answer: 0,
+        fact: "Jitu is a huge football fan and never misses important matches!"
+      },
+      {
+        question: "What is Jitu's favorite dessert?",
+        options: ["Ice Cream", "Chocolate Cake", "Gulab Jamun", "Tiramisu"],
+        answer: 2,
+        fact: "Jitu has a sweet tooth for Gulab Jamun, especially when it's warm!"
+      },
+      {
+        question: "What quality do people love most about Jitu?",
+        options: ["Humour", "Kindness", "Intelligence", "Creativity"],
+        answer: 1,
+        fact: "Jitu's kindness and caring nature make him special to everyone around him!"
+      }
+    ];
+
+    // DOM Elements
+    const quizContent = document.getElementById('quiz-content');
+    const resultContainer = document.getElementById('result-container');
+    const questionElement = document.getElementById('question');
+    const optionsElement = document.getElementById('options');
+    const nextButton = document.getElementById('next-btn');
+    const questionNumber = document.getElementById('question-number');
+    const progressElement = document.getElementById('progress');
+    const scoreElement = document.getElementById('score');
+    const resultTitle = document.getElementById('result-title');
+    const resultMessage = document.getElementById('result-message');
+    const feedbackElement = document.getElementById('feedback');
+    
+    // Quiz state
+    let currentQuestionIndex = 0;
+    let score = 0;
+    let selectedOption = null;
+    let quizCompleted = false;
+    
+    // Initialize the quiz
+    function startQuiz() {
+      currentQuestionIndex = 0;
+      score = 0;
+      quizCompleted = false;
+      showQuestion();
+    }
+    
+    // Display current question
+    function showQuestion() {
+      resetState();
+      const currentQuestion = quizData[currentQuestionIndex];
+      const questionNo = currentQuestionIndex + 1;
+      
+      questionNumber.textContent = `Question ${questionNo} of ${quizData.length}`;
+      progressElement.textContent = `${questionNo}/${quizData.length}`;
+      questionElement.textContent = currentQuestion.question;
+      
+      // Create options
+      currentQuestion.options.forEach((option, index) => {
+        const button = document.createElement('button');
+        button.textContent = option;
+        button.classList.add('option');
+        button.dataset.number = index + 1;
+        button.addEventListener('click', () => selectOption(button, index));
+        optionsElement.appendChild(button);
+      });
+      
+      // Disable next button initially
+      nextButton.disabled = true;
+      
+      // Add animation
+      const questionContainer = document.querySelector('.question-container');
+      questionContainer.style.opacity = '0';
+      questionContainer.style.transform = 'translateY(20px)';
+      
+      setTimeout(() => {
+        questionContainer.style.opacity = '1';
+        questionContainer.style.transform = 'translateY(0)';
+      }, 50);
+    }
+    
+    // Reset the state for next question
+    function resetState() {
+      // Clear previous options
+      while (optionsElement.firstChild) {
+        optionsElement.removeChild(optionsElement.firstChild);
+      }
+      
+      // Reset UI
+      feedbackElement.textContent = '';
+      feedbackElement.className = 'feedback';
+      feedbackElement.style.display = 'none';
+      nextButton.disabled = true;
+      selectedOption = null;
+    }
+    
+    // Handle option selection
+    function selectOption(selectedButton, index) {
+      // Reset previously selected option if any
+      const options = document.querySelectorAll('.option');
+      options.forEach(option => {
+        option.classList.remove('selected');
+      });
+      
+      // Mark selected option
+      selectedButton.classList.add('selected');
+      selectedOption = index;
+      nextButton.disabled = false;
+    }
+    
+    // Show feedback for the selected answer
+    function showFeedback(isCorrect) {
+      const currentQuestion = quizData[currentQuestionIndex];
+      feedbackElement.textContent = isCorrect 
+        ? '✅ Correct! ' + currentQuestion.fact 
+        : '❌ Oops! ' + currentQuestion.fact;
+      
+      feedbackElement.className = `feedback ${isCorrect ? 'correct' : 'incorrect'}`;
+      feedbackElement.style.display = 'block';
+      
+      // Highlight correct and incorrect answers
+      const options = document.querySelectorAll('.option');
+      options.forEach((option, index) => {
+        if (index === currentQuestion.answer) {
+          option.classList.add('correct');
+        } else if (index === selectedOption && !isCorrect) {
+          option.classList.add('incorrect');
+        }
+        option.style.pointerEvents = 'none';
+      });
+    }
+    
+    // Move to next question or show results
+    function nextQuestion() {
+      // If no option is selected
+      if (selectedOption === null && !quizCompleted) return;
+      
+      // If feedback is not shown yet (first click)
+      if (feedbackElement.style.display !== 'block') {
+        const currentQuestion = quizData[currentQuestionIndex];
+        const isCorrect = selectedOption === currentQuestion.answer;
+        
+        if (isCorrect) {
+          score++;
+        }
+        
+        showFeedback(isCorrect);
+        nextButton.textContent = currentQuestionIndex < quizData.length - 1 ? 'Next Question' : 'Show Results';
+        return;
+      }
+      
+      // If feedback is shown, move to next question
+      currentQuestionIndex++;
+      
+      if (currentQuestionIndex < quizData.length) {
+        showQuestion();
+        nextButton.textContent = 'Next Question';
+        nextButton.disabled = true;
+      } else {
+        showResults();
+      }
+    }
+    
+    // Show final results
+    function showResults() {
+      quizCompleted = true;
+      const percentage = Math.round((score / quizData.length) * 100);
+      
+      // Update result UI
+      scoreElement.textContent = percentage;
+      
+      // Customize message based on score
+      if (percentage >= 80) {
+        resultTitle.textContent = '🎉 Amazing! You Know Jitu So Well!';
+        resultMessage.textContent = `You scored ${score} out of ${quizData.length}! You must be Jitu's best friend!`;
+      } else if (percentage >= 50) {
+        resultTitle.textContent = '👍 Good Job!';
+        resultMessage.textContent = `You scored ${score} out of ${quizData.length}. You know Jitu pretty well!`;
+      } else {
+        resultTitle.textContent = '🤔 Keep Trying!';
+        resultMessage.textContent = `You scored ${score} out of ${quizData.length}. Spend more time with Jitu to know him better!`;
+      }
+      
+      // Show result container with animation
+      quizContent.style.display = 'none';
+      resultContainer.style.display = 'block';
+      
+      // Trigger confetti if score is good
+      if (percentage >= 70) {
+        triggerConfetti();
+      }
+      
+      // Scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    
+    // Confetti effect
+    function triggerConfetti() {
+      const container = document.querySelector('.floating-elements');
+      container.innerHTML = '';
+      
+      for (let i = 0; i < 100; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = Math.random() * 100 + 'vw';
+        confetti.style.animationDelay = Math.random() * 5 + 's';
+        confetti.style.setProperty('--delay', Math.random() * 5);
+        confetti.style.background = getRandomColor();
+        container.appendChild(confetti);
+      }
+    }
+    
+    // Generate random bright colors
+    function getRandomColor() {
+      const colors = [
+        '#ff6b6b', '#4ecdc4', '#ffd93d', '#95e1d3', '#fce38a',
+        '#ff9ff3', '#feca57', '#ff6b6b', '#48dbfb', '#1dd1a1'
+      ];
+      return colors[Math.floor(Math.random() * colors.length)];
+    }
+    
+    // Event listeners
+    nextButton.addEventListener('click', nextQuestion);
+    
+    // Start the quiz when the page loads
+    document.addEventListener('DOMContentLoaded', startQuiz);
+  </script>
+</body>
+</html>

@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎨 Jitu's Birthday Gallery</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <style>
+    /* Gallery specific styles */
+    .gallery-intro {
+      font-size: 1.2rem;
+      color: #666;
+      margin-bottom: 2rem;
+    }
+    
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.5rem;
+      padding: 1rem 0;
+    }
+    
+    .gallery-item {
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      opacity: 0;
+      animation: fadeInUp 0.6s ease forwards;
+    }
+    
+    .gallery-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+    
+    .gallery-item img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+      cursor: pointer;
+    }
+    
+    .gallery-item:hover img {
+      transform: scale(1.05);
+    }
+    
+    .caption {
+      padding: 1rem;
+      text-align: center;
+      font-weight: 500;
+      color: #ffffff;
+      margin: 0;
+    }
+    
+    /* Lightbox styles */
+    .lightbox {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.9);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+    
+    .lightbox.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .lightbox img {
+      max-width: 90%;
+      max-height: 90vh;
+      border-radius: 5px;
+      box-shadow: 0 5px 30px rgba(242, 242, 242, 0.5);
+    }
+    
+    .close-lightbox {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      color: white;
+      font-size: 3rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+    
+    .close-lightbox:hover {
+      color: var(--primary-color);
+    }
+    
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .gallery-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 1rem;
+      }
+      
+      .gallery-item img {
+        height: 180px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .gallery-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-brand animate__animated animate__bounce">🎂 Jitu's Birthday Bash!</div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      
+      <a href="gallery.html" class="active">Photo Gallery</a>
+      <a href="wishes.html">Birthday Wishes</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h1 class="animate__animated animate__fadeInDown">📸 Apnar Bandhu Borgos</h1>
+    <p class="gallery-intro animate__animated animate__fadeIn animate__delay-1s">Kotiyaba KOtiyaba Log Pua Banhdu Xokol.</p>
+
+    <div class="gallery-grid">
+      <div class="gallery-item" style="animation-delay: 0.1s">
+        <img src="images/ari.jpeg" alt="Ari" onclick="openLightbox(this)">
+        <p class="caption">Ari's da LAthi da</p>
+      </div>
+      <div class="gallery-item" style="animation-delay: 0.2s">
+        <img src="images/arin.jpeg" alt="Arin" onclick="openLightbox(this)">
+        <p class="caption">Arin jot Culver Tot</p>
+      </div>
+      <div class="gallery-item" style="animation-delay: 0.3s">
+        <img src="images/Bimal.jpeg" alt="Bimal" onclick="openLightbox(this)">
+        <p class="caption">Bimal beleg Deshor Xombol</p>
+      </div>
+      <div class="gallery-item" style="animation-delay: 0.4s">
+        <img src="images/Dav.jpeg" alt="Dav" onclick="openLightbox(this)">
+        <p class="caption">Itu XItu Bohutu</p>
+      </div>
+      <div class="gallery-item" style="animation-delay: 0.5s">
+        <img src="images/Jack.jpeg" alt="Jack" onclick="openLightbox(this)">
+        <p class="caption">MOina nuthe motorot , goru ahe ekjapot</p>
+      </div>
+      <div class="gallery-item" style="animation-delay: 0.6s">
+        <img src="images/Nayn.jpeg" alt="Nayn" onclick="openLightbox(this)">
+        <p class="caption">Asu Diok aru </p>
+      </div>
+      <div class="gallery-item" style="animation-delay: 0.7s">
+        <img src="images/Rin.jpeg" alt="Rin" onclick="openLightbox(this)">
+        <p class="caption">Mah kore kham bAte bate jam</p>
+      </div>
+      <div class="gallery-item" style="animation-delay: 0.8s">
+        <img src="images/BAck.jpeg" alt="Group Photo" onclick="openLightbox(this)">
+        <p class="caption">soku tip  mari diba photo hoi jaba</p>
+      </div>
+    </div>
+    
+    <div class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+      ↑ Back to Top
+    </div>
+  </div>
+
+  <!-- Lightbox -->
+  <div id="lightbox" class="lightbox hidden">
+    <span class="close-lightbox" onclick="closeLightbox()">&times;</span>
+    <img id="lightbox-img" src="" alt="Enlarged view" class="animate__animated">
+  </div>
+
+  <!-- Back to top button styles -->
+  <style>
+    .back-to-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: var(--primary-color);
+      color: white;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      font-size: 0.8rem;
+      text-align: center;
+      line-height: 1.2;
+      padding: 5px;
+    }
+    
+    .back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .back-to-top:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    }
+  </style>
+
+  <script>
+    // Lightbox functionality
+    function openLightbox(img) {
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightbox-img');
+      
+      // Add loading class
+      lightboxImg.classList.add('animate__fadeOut');
+      
+      // Set image source
+      lightboxImg.src = img.src;
+      
+      // Show lightbox
+      lightbox.classList.add('visible');
+      
+      // Add animation class after a short delay
+      setTimeout(() => {
+        lightboxImg.classList.remove('animate__fadeOut');
+        lightboxImg.classList.add('animate__zoomIn');
+      }, 50);
+      
+      // Prevent background scroll
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightbox-img');
+      
+      // Add fade out animation
+      lightboxImg.classList.remove('animate__zoomIn');
+      lightboxImg.classList.add('animate__fadeOut');
+      
+      // Hide lightbox after animation completes
+      setTimeout(() => {
+        lightbox.classList.remove('visible');
+        lightboxImg.classList.remove('animate__fadeOut');
+        document.body.style.overflow = '';
+      }, 300);
+    }
+    
+    // Close lightbox when clicking outside the image
+    document.getElementById('lightbox').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeLightbox();
+      }
+    });
+    
+    // Close with Escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeLightbox();
+      }
+    });
+    
+    // Show/hide back to top button on scroll
+    const backToTop = document.querySelector('.back-to-top');
+    
+    window.addEventListener('scroll', function() {
+      if (window.pageYOffset > 300) {
+        backToTop.classList.add('visible');
+      } else {
+        backToTop.classList.remove('visible');
+      }
+    });
+    
+    // Animate gallery items on scroll
+    const animateOnScroll = function() {
+      const galleryItems = document.querySelectorAll('.gallery-item');
+      
+      galleryItems.forEach((item, index) => {
+        const itemTop = item.getBoundingClientRect().top;
+        const windowHeight = window.innerHeight;
+        
+        if (itemTop < windowHeight - 100) {
+          item.style.animation = `fadeInUp 0.6s ease forwards ${index * 0.1}s`;
+        }
+      });
+    };
+    
+    // Run once on load
+    window.addEventListener('load', animateOnScroll);
+    
+    // Run on scroll with throttling
+    let isScrolling;
+    window.addEventListener('scroll', function() {
+      window.clearTimeout(isScrolling);
+      isScrolling = setTimeout(animateOnScroll, 50);
+    }, false);
+  </script>
+  
+  <!-- Include main JavaScript -->
+  <script src="js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎉 Happy Birthday Jitu! 🎂</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-brand animate__animated animate__bounce">🎂 Jitu's Birthday Bash!</div>
+    <div class="nav-links">
+      <a href="index.html" class="active">Home</a>
+      
+      <a href="gallery.html">Photo Gallery</a>
+      <a href="wishes.html">Birthday Wishes</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h1 class="animate__animated animate__pulse animate__infinite">🎉 Happy Birthday Jitu! 🎂</h1>
+    <p class="subtitle"></p>
+    
+    <div class="celebration-message animate__animated animate__bounceIn">
+      <h1>🎉 🎂</h1>
+      <p><h1>Bosore Bosore Barhi Ja ,Gosot r para Noxora Fol Hoi Nasi Ja</h1></div><p>
+    
+
+    <div class="welcome-content">
+      <p class="welcome-text animate__animated animate__fadeIn">🎈🎈🎈🎈🎈🎈</p>
+      <div class="action-buttons">
+        
+        <a href="gallery.html" class="btn secondary animate__animated animate__pulse animate__infinite animate__delay-1s">📸 Photo Gallery</a>
+        <a href="wishes.html" class="btn tertiary animate__animated animate__pulse animate__infinite animate__delay-2s">💌 Birthday Wishes</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="floating-elements">
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+  </div>
+
+  <script>
+    // Update time passed since midnight
+    function updateTimePassed() {
+      const now = new Date();
+      const hours = now.getHours();
+      const minutes = now.getMinutes();
+      const seconds = now.getSeconds();
+      
+      // Update the display
+      document.getElementById('hours-passed').textContent = hours.toString().padStart(2, '0');
+      document.getElementById('minutes-passed').textContent = minutes.toString().padStart(2, '0');
+      document.getElementById('seconds-passed').textContent = seconds.toString().padStart(2, '0');
+      
+      // Always show Day 0 with the specified message
+      document.getElementById('day-counter').textContent = '0';
+      document.querySelector('.day-counter div').textContent = 'aji Day 0 , mane notun notun bosor start';
+    }
+    
+    // Update immediately and then every second
+    updateTimePassed();
+    setInterval(updateTimePassed, 1000);
+  </script>
+  <script src="js/script.js"></script>
+  <script>
+    // Create floating balloons
+    function createBalloons() {
+      const colors = ['#ff6b6b', '#4ecdc4', '#ffd93d', '#95e1d3', '#fce38a'];
+      for (let i = 0; i < 15; i++) {
+        const balloon = document.createElement('div');
+        balloon.className = 'balloon';
+        balloon.style.left = Math.random() * 100 + 'vw';
+        balloon.style.animationDelay = Math.random() * 15 + 's';
+        balloon.style.background = colors[Math.floor(Math.random() * colors.length)];
+        document.body.appendChild(balloon);
+      }
+    }
+
+    // Add confetti animation to CSS (needed for the general page background)
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes fall {
+        to {
+          transform: translateY(100vh) rotate(360deg);
+        }
+      }
+      
+      @keyframes bounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-20px); }
+      }
+      
+      @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+      
+      .surprise-message {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(255, 255, 255, 0.9);
+        padding: 20px 40px;
+        border-radius: 10px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #ff6b6b;
+        z-index: 1000;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        animation: bounce 0.5s ease infinite;
+        text-align: center;
+      }
+      
+      .emoji-rain {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 999;
+      }
+      
+      .emoji {
+        position: absolute;
+        font-size: 24px;
+        animation: fall linear forwards;
+        pointer-events: none;
+      }
+    `;
+    document.head.appendChild(style);
+
+    // Initialize balloons on page load
+    window.addEventListener('load', createBalloons);
+  </script>
+</body>
+</html>
